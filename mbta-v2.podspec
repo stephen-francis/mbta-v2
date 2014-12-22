@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "mbta-v2"
-  s.version      = "0.0.1"
+  s.version      = "0.1"
   s.summary      = "An iOS wrapper for the MBTA's API, v2"
 
   s.homepage     = "https://github.com/stephen-francis/mbta-v2"
@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.author    = "stephen-francis"
 
   s.source       = { :git => "https://github.com/stephen-francis/mbta-v2.git", 
-                     :commit => "0.0.1" }
+                     :tag => "0.1" }
 
   s.source_files  = '*.{h,m}'
 
