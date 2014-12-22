@@ -5,9 +5,6 @@
 //  Created by Stephen Francis on 4/15/14.
 //  Copyright (c) 2014 SFra. All rights reserved.
 //
-//#import "Constants.h"
-
-//#import <CoreLocation/CoreLocation.h>
 
 #import "Constants.h"
 #import "MBTAClient.h"
@@ -20,12 +17,22 @@
 @implementation MBTAConverter
 
 #pragma route conversion
-+ (NSArray *)convertRoutes:(NSDictionary *)routesResponse
++ (NSArray *)convertRoutes:(NSData *)routesResponse
 {
+    if (!routesResponse)
+        return nil;
+    
+    NSError *jsonSerialError;
+    NSDictionary *routesJSON = [MBTAConverter dictionarySerializedForData:routesResponse
+                                                                      error:&jsonSerialError];
+    // todo: future MBTAManager class will define delegate with error handling
+    if (jsonSerialError)
+        return nil;
+    
     NSMutableArray *routes = [[NSMutableArray alloc] init];
     MBTARoute *route;
 
-    for (NSDictionary *modeElm in [routesResponse objectForKey:kMBTA_MODE])
+    for (NSDictionary *modeElm in [routesJSON objectForKey:kMBTA_MODE])
     {
         for (NSDictionary *routeElm in [modeElm objectForKey:kMBTA_ROUTE])
         {
@@ -41,22 +48,29 @@
     return routes;
 }
 
-+ (NSArray *)convertRoutesByStop:(NSDictionary *)routesByStopResponse
++ (NSArray *)convertRoutesByStop:(NSData *)routesByStopResponse
 {
     return [MBTAConverter convertRoutes:routesByStopResponse];
 }
 
 #pragma stop conversion
-+ (NSArray *)convertStopsByRoute:(NSDictionary *)stopsByRouteResponse
++ (NSArray *)convertStopsByRoute:(NSData *)stopsByRouteResponse
 {
     if (!stopsByRouteResponse)
+        return nil;
+    
+    NSError *jsonSerialError;
+    NSDictionary *stopsByRouteJSON = [MBTAConverter dictionarySerializedForData:stopsByRouteResponse
+                                                                      error:&jsonSerialError];
+    // todo: future MBTAManager class will define delegate with error handling
+    if (jsonSerialError)
         return nil;
     
     MBTARouteStop *stop;
     NSMutableArray *stops = [[NSMutableArray alloc] init];
     
     // look at each direction in res
-    for (NSDictionary *directionElm in [stopsByRouteResponse objectForKey:kMBTA_ROUTE_INFO_DIRECTION])
+    for (NSDictionary *directionElm in [stopsByRouteJSON objectForKey:kMBTA_ROUTE_INFO_DIRECTION])
     {
         // parse each of its stops
         for (NSDictionary *stopElm in [directionElm objectForKey:kMBTA_STOP])
@@ -75,14 +89,21 @@
     return stops;
 }
 
-+ (NSArray *)convertStopsByLocation:(NSDictionary *)stopsByLocationResponse
++ (NSArray *)convertStopsByLocation:(NSData *)stopsByLocationResponse
 {
     if (!stopsByLocationResponse)
         return nil;
     
+    NSError *jsonSerialError;
+    NSDictionary *stopsByLocationJSON = [MBTAConverter dictionarySerializedForData:stopsByLocationResponse
+                                                                          error:&jsonSerialError];
+    // todo: future MBTAManager class will define delegate with error handling
+    if (jsonSerialError)
+        return nil;
+    
     MBTAStop *stop;
     NSMutableArray *stops = [[NSMutableArray alloc] init];
-    for (NSDictionary *stopElm in [stopsByLocationResponse objectForKey:kMBTA_STOP])
+    for (NSDictionary *stopElm in [stopsByLocationJSON objectForKey:kMBTA_STOP])
     {
         stop = [MBTAConverter stopForDictionary:stopElm];
         [stops addObject:stop];
@@ -114,32 +135,6 @@
         return nil;
     return nil;
 }
-
-/*
- - (NSURLSessionDataTask *)retrievePredictionsByStop:(NSString *)stop
- includeAccessAlerts:(bool)includeAccessAlerts
- includeServiceAlerts:(bool)includeServiceAlerts
- completion:(MBTAClientCompletion)completion;
- 
- 
- - (NSURLSessionDataTask *)retrievePredictionsByRoute:(NSString *)route
- includeAccessAlerts:(bool)includeAccessAlerts
- includeServiceAlerts:(bool)includeServiceAlerts
- completion:(MBTAClientCompletion)completion;
- 
- - (NSURLSessionDataTask *)retrieveVehiclesByRoute:(NSString *)route
- includeAccessAlerts:(bool)includeAccessAlerts
- includeServiceAlerts:(bool)includeServiceAlerts
- completion:(MBTAClientCompletion)completion;
- 
- - (NSURLSessionDataTask *)retrievePredictionsByTrip:(NSString *)trip
- completion:(MBTAClientCompletion)completion;
- 
- - (NSURLSessionDataTask *)retrieveVehiclesByTrip:(NSString *)trip
- completion:(MBTAClientCompletion)completion;
- 
- 
- */
 
 #pragma pred conversion
 + (NSArray *)convertPredictionsByStop:(NSDictionary *)predictionsByStopResponse
@@ -180,6 +175,25 @@
 #pragma alert conversion
 
 #pragma helper methods
++ (NSDictionary *)dictionarySerializedForData:(NSData *)data error:(NSError **)error
+{
+    if (!data)
+        return nil;
+    
+    NSError *localError;
+    NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data
+                                                                 options:kNilOptions
+                                                                   error:&localError];
+    if (localError)
+    {
+        *error = localError;
+        return nil;
+    }
+    
+    return jsonResponse;
+    
+}
+
 + (MBTAStop *)stopForDictionary:(NSDictionary *)dictionary
 {
     if (!dictionary)
@@ -211,28 +225,6 @@
     return route;
 }
 
-/*
-+ (NSArray *)convertRoutes:(NSDictionary *)routesResponse;
-+ (NSArray *)convertRoutesByStop:(NSDictionary *)routesByStopResponse;
 
-+ (NSArray *)convertStopsByRoute:(NSDictionary *)stopsByRouteResponse;
-+ (NSArray *)convertStopsByLocation:(NSDictionary *)stopsByLocationResponse;
-
-+ (NSArray *)convertScheduleByRoute:(NSDictionary *)scheduleByRouteResponse;
-+ (NSArray *)convertScheduleByStop:(NSDictionary *)scheduleByStopResponse;
-+ (NSArray *)convertScheduleByTrip:(NSDictionary *)scheduleByTripResponse;
-
-+ (NSArray *)convertPredictionsByRoute:(NSDictionary *)predictionsByRouteResponse;
-+ (NSArray *)convertPredictionsByStop:(NSDictionary *)predictionsByStopResponse;
-+ (NSArray *)convertPredictionsByTrip:(NSDictionary *)predictionsByTripResponse;
-+ (NSArray *)convertVehiclesByRoute:(NSDictionary *)vehiclesByRouteResponse;
-+ (NSArray *)convertVehiclesByTrip:(NSDictionary *)vehiclesByTripResponse;
-
-+ (NSArray *)convertAlertsByRoute:(NSDictionary *)alertsByRouteResponse;
-+ (NSArray *)convertAlertsByStop:(NSDictionary *)alertsByStopResponse;
-+ (NSArray *)convertAlertByID:(NSDictionary *)AlertByIDResponse;
-+ (NSArray *)convertAlertHeadersByRoute:(NSDictionary *)alertHeadersByRouteResponse;
-+ (NSArray *)convertAlertHeadersByStop:(NSDictionary *)alertHeadersByStopResponse;
-*/
 
 @end
