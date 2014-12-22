@@ -1,8 +1,3 @@
-#mbta-v2
-mbta-v2 provides a wrapper for the MBTA-realtime API. The available 0.1 version
-should be considered an alpha version. That said, MBTAClient can perform all
-requests available via the MBTA-realtime API.
-
 # mbta-v2
 
 mbta-v2 is a wrapper for the MBTA-realtime API, v2. It can perform all requests documented in the MBTA's API, from arrival predictions to alerts.
