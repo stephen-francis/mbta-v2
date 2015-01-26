@@ -4,6 +4,7 @@
 //
 #import <Foundation/Foundation.h>
 
+#warning you must specify your API key here!
 #define kMBTA_TEST_API_KEY @"wX9NwuHnZU2ToO7GmGR9uw"
 @interface MBTAClient : NSObject
 

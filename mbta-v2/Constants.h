@@ -40,4 +40,20 @@
 #define kMBTA_ROUTE_INFO_DIRECTION_NAME @"direction_name"
 #define kMBTA_ROUTE_INFO_STOP_ORDER @"stop_order"
 
+#define kMBTA_ERR_HTTP_RES_OK           200
+#define kMBTA_ERR_HTTP_RES_BADPARAM     400
+#define kMBTA_ERR_HTTP_RES_UNAUTH       401
+#define kMBTA_ERR_HTTP_RES_FORBIDDEN    403
+#define kMBTA_ERR_HTTP_RES_NOTFOUND     404
+#define kMBTA_ERR_HTTP_RES_CANTGETDATA  500
+#define kMBTA_ERR_UNKNOWN               1
+
+#define kMBTA_ERR_DESCRIPTION_RES_OK  @"success"
+#define kMBTA_ERR_DESCRIPTION_RES_BADPARAM  @"bad parameters, problem fetching data"
+#define kMBTA_ERR_DESCRIPTION_RES_UNATH  @"authentication is required, you must authenticate"
+#define kMBTA_ERR_DESCRIPTION_RES_FORBIDDEN  @"forbidden: Valid request, denied by server"
+#define kMBTA_ERR_DESCRIPTION_RES_NOTFOUND  @"requested resource could not be found"
+#define kMBTA_ERR_DESCRIPTION_RES_CANTGETDATA  @"problem occurred internally on server"
+#define kMBTA_ERR_DESCRIPTION_UNKNOWN  @"unknown error"
+
 #endif
