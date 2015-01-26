@@ -1,23 +1,23 @@
 # mbta-v2
 
-mbta-v2 is a wrapper for the MBTA-realtime API, v2. It can perform all requests documented in the MBTA's API, from arrival predictions to alerts.
+mbta-v2 is a wrapper for the MBTA-realtime API, v2. it can perform all requests documented in the MBTA's API, from arrival predictions to alerts.
 
 ## Adding to Your Project
 
-If you're using Cocoapods, add the following to your Podfile:
+if you're using cocoapods, add the following to your podfile:
 
 ``` ruby
 pod 'mbta-v2'
 ```
 
-The header for mbta-v2 would be included like so:
+the header for mbta-v2 would be included like so:
 ```objective-c
 #import <mbta-v2.h>
 ```
 
-mbta-v2 requires ARC, and is for iOS only.
+mbta-v2 requires ARC, and is for iOS only
 
-### Creating a request for all the routes available at a given stop, parsing results
+### create a request for all the routes available at a given stop, parsing results
 
 ```objective-c
 [[MBTAClient shared] retrieveRoutesByStop:@"70065" withCompletion:^(NSData *data, NSError *error)
@@ -28,10 +28,12 @@ mbta-v2 requires ARC, and is for iOS only.
 }];
 
 ```
-In this case, for stop id 70065, which is Porter Square, you'd see the following output:
+in this case, for stop id 70065, which is Porter Square, you'd see the following output:
 
-931_
+###931_
 
-933_
+###933_
 
-These represent the two Red Line routes that are available at said stop.
+these represent the two Red Line routes that are available at Porter Square, just like you asked for! 
+
+now, you can use these routes to find get the schedule, other stops, train arrival times, and alerts you need to be mindful of.
