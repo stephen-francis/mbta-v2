@@ -1,0 +1,25 @@
+{
+  "name": "mbta-v2",
+  "version": "0.1.0",
+  "summary": "A short description of mbta-v2.",
+  "description": "",
+  "homepage": "https://github.com/<GITHUB_USERNAME>/mbta-v2",
+  "license": "MIT",
+  "authors": {
+    "stephen-francis": "stephen@pillpack.com"
+  },
+  "source": {
+    "git": "https://github.com/<GITHUB_USERNAME>/mbta-v2.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "7.0"
+  },
+  "requires_arc": true,
+  "source_files": "Pod/Classes/**/*",
+  "resource_bundles": {
+    "mbta-v2": [
+      "Pod/Assets/*.png"
+    ]
+  }
+}

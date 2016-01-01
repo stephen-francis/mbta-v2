@@ -1,0 +1,6 @@
+framework module mbta_v2 {
+  umbrella header "mbta-v2-umbrella.h"
+
+  export *
+  module * { export * }
+}

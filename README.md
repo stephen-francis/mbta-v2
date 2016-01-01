@@ -1,39 +1,29 @@
 # mbta-v2
 
-mbta-v2 is a wrapper for the MBTA-realtime API, v2. it can perform all requests documented in the MBTA's API, from arrival predictions to alerts.
+[![CI Status](http://img.shields.io/travis/stephen-francis/mbta-v2.svg?style=flat)](https://travis-ci.org/stephen-francis/mbta-v2)
+[![Version](https://img.shields.io/cocoapods/v/mbta-v2.svg?style=flat)](http://cocoapods.org/pods/mbta-v2)
+[![License](https://img.shields.io/cocoapods/l/mbta-v2.svg?style=flat)](http://cocoapods.org/pods/mbta-v2)
+[![Platform](https://img.shields.io/cocoapods/p/mbta-v2.svg?style=flat)](http://cocoapods.org/pods/mbta-v2)
 
-## Adding to Your Project
+## Usage
 
-if you're using cocoapods, add the following to your podfile:
+To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
-``` ruby
-pod 'mbta-v2'
+## Requirements
+
+## Installation
+
+mbta-v2 is available through [CocoaPods](http://cocoapods.org). To install
+it, simply add the following line to your Podfile:
+
+```ruby
+pod "mbta-v2"
 ```
 
-the header for mbta-v2 would be included like so:
-```objective-c
-#import <mbta-v2.h>
-```
+## Author
 
-mbta-v2 requires ARC, and is for iOS only
+stephen-francis, stephen@pillpack.com
 
-### create a request for all the routes available at a given stop, parsing results
+## License
 
-```objective-c
-[[MBTAClient shared] retrieveRoutesByStop:@"70065" withCompletion:^(NSData *data, NSError *error)
-{
-    NSArray *routes = [MBTAConverter convertRoutesByStop:data];
-    for (MBTARoute *route in routes)
-        NSLog(@"%@", route.routeID);
-}];
-
-```
-in this case, for stop id 70065, which is Porter Square, you'd see the following output:
-
-###931_
-
-###933_
-
-these represent the two Red Line routes that are available at Porter Square, just like you asked for! 
-
-now, you can use these routes to find get the schedule, other stops, train arrival times, and alerts you need to be mindful of.
+mbta-v2 is available under the MIT license. See the LICENSE file for more info.
