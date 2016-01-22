@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "mbta-v2"
-  s.version          = "0.1.0"
+  s.version          = "0.1.1"
   s.summary          = "A short description of mbta-v2."
 
 # This description is used to generate tags and improve search results.
@@ -16,8 +16,7 @@ Pod::Spec.new do |s|
 #   * Try to keep it short, snappy and to the point.
 #   * Write the description between the DESC delimiters below.
 #   * Finally, don't worry about the indent, CocoaPods strips it!  
-  s.description      = <<-DESC
-                       DESC
+    s.description      = "mbta-v2 is a wrapper for the MBTA-realtime API, v2. it can perform all requests documented in the MBTA's API, from arrival predictions to alerts."
 
   s.homepage         = "https://github.com/<GITHUB_USERNAME>/mbta-v2"
   # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
@@ -33,6 +32,8 @@ Pod::Spec.new do |s|
   s.resource_bundles = {
     'mbta-v2' => ['Pod/Assets/*.png']
   }
+
+  s.watchos.deployment_target = '2.0'
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
