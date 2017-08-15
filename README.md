@@ -20,11 +20,11 @@ mbta-v2 requires ARC, and is for iOS only
 ### create a request for all the routes available at a given stop, parsing results
 
 ```objective-c
-[[MBTAClient shared] retrieveRoutesByStop:@"70065" withCompletion:^(NSData *data, NSError *error)
-{
+[[MBTAClient shared] retrieveRoutesByStop:@"70065" withCompletion:^(NSData *data, NSError *error) {
     NSArray *routes = [MBTAConverter convertRoutesByStop:data];
-    for (MBTARoute *route in routes)
+    for (MBTARoute *route in routes) {
         NSLog(@"%@", route.routeID);
+    }
 }];
 
 ```
